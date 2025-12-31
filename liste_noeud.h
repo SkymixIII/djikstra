@@ -11,7 +11,7 @@
 typedef struct cellule_t {
     coord_t noeud;
     float cout;
-    struct cellule_t * precedent;
+    struct coord_t precedent;
     struct cellule_t * suivant;
 } cellule_t;
 
@@ -130,7 +130,7 @@ coord_t min_noeud_liste(const liste_noeud_t * liste);
  * @param precedent nouveau noeud précédent pour noeud
  * @param cout nouveau coût pour noeud
  */
-void inserer_noeud_liste(liste_noeud_t * liste, coord_t noeud, cellule_t* precedent, float cout);
+void inserer_noeud_liste(liste_noeud_t * liste, coord_t noeud, coord_t precedent, float cout);
 
 /**
  * supprimer_noeud_liste : supprime le noeud donné de la liste. Si le noeud n'est pas dans la liste,

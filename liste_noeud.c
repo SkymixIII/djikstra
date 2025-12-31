@@ -3,8 +3,6 @@
 
 
 
-
-
 liste_noeud_t* creer_liste(){
     liste_noeud_t* liste = malloc(sizeof(liste_noeud_t));
     if (liste != NULL){
@@ -13,7 +11,6 @@ liste_noeud_t* creer_liste(){
     }
     return liste;
 }
-
 
 void detruire_liste(liste_noeud_t ** liste_ptr){
     if (liste_ptr == NULL || *liste_ptr == NULL){
@@ -30,86 +27,84 @@ void detruire_liste(liste_noeud_t ** liste_ptr){
     *liste_ptr = NULL;
 }
 
-
 bool est_vide_liste(const liste_noeud_t * liste){
+    if (liste == NULL) return true;
     return (liste->taille == 0);
 }
 
-
 bool contient_noeud_liste(const liste_noeud_t * liste, coord_t noeud){
-    bool contient = false;
     if (liste == NULL){
         return false;
     }
     cellule_t * courant = liste->tete;
-    while ((courant != NULL) && (!contient)){
+    while (courant != NULL){
         if (memes_coord(courant->noeud, noeud)){
-            contient = true;
+            return true;
         }
         courant = courant->suivant;
     }
-    return contient;
+    return false;
 }
-
 
 bool contient_arrete_liste(const liste_noeud_t * liste, coord_t source, coord_t destination){
-    bool contient = false;
     if (liste == NULL){
         return false;
     }
     cellule_t * courant = liste->tete;
-    while ((courant != NULL) && (!contient)){
-        if (memes_coord(courant->noeud, destination) && (courant->precedent != NULL) && (memes_coord(courant->precedent->noeud, source))){
-            contient = true;
+    while (courant != NULL){
+        if (memes_coord(courant->noeud, destination)){
+            return memes_coord(courant->precedent, source);
         }
         courant = courant->suivant;
     }
-    return contient;
+    return false;
 }
 
-
 float cout_noeud_liste(const liste_noeud_t * liste, coord_t noeud){
-    float cout = INFINITY;
     if (liste == NULL){
         return INFINITY;
     }
     cellule_t * courant = liste->tete;
-    while ((courant != NULL) && (cout == INFINITY)){
+    while (courant != NULL){
         if (memes_coord(courant->noeud, noeud)){
-            cout = courant->cout;
+            return courant->cout;
         }
         courant = courant->suivant;
     }
-    return cout;
+    return INFINITY;
 }
-
 
 coord_t precedent_noeud_liste(const liste_noeud_t * liste, coord_t noeud){
     coord_t noeud_resultat;
-    noeud_resultat.abscisse = -1;
-    noeud_resultat.ordonne = -1;
+    noeud_resultat.abscisse = -1; 
+    noeud_resultat.ordonne = -1; 
     if (liste == NULL){
         return noeud_resultat;
     }
     cellule_t * courant = liste->tete;
-    while ((courant != NULL) ){
+    while (courant != NULL){
         if (memes_coord(courant->noeud, noeud)){
-            noeud_resultat.abscisse = get_x(courant->precedent->noeud);
-            noeud_resultat.ordonne = get_y(courant->precedent->noeud);
+            return courant->precedent; 
         }
         courant = courant->suivant;
     }
     return noeud_resultat;
 }
 
-
 coord_t min_noeud_liste(const liste_noeud_t * liste){
-    float cout = INFINITY;
-    coord_t noeud_resultat;
+    coord_t noeud_resultat = {-1, -1};
+    if (liste == NULL || liste->tete == NULL) {
+        return noeud_resultat;
+    }
+    float min_cout = INFINITY;
     cellule_t * courant = liste->tete;
+    if (courant != NULL) {
+        min_cout = courant->cout;
+        noeud_resultat = courant->noeud;
+    }
     while (courant != NULL){
-        if (courant->cout<cout){
-            cout = courant->cout;
+        if (courant->cout < min_cout){
+            min_cout = courant->cout;
             noeud_resultat = courant->noeud;
         }
         courant = courant->suivant;
@@ -117,25 +112,43 @@ coord_t min_noeud_liste(const liste_noeud_t * liste){
     return noeud_resultat;
 }
 
-
 void inserer_noeud_liste(liste_noeud_t * liste, coord_t noeud, coord_t precedent, float cout){
-    bool trouve = false; 
-    cellule_t * nouveau = malloc(sizeof(cellule_t));
+    if (liste == NULL) return;
     cellule_t * courant = liste->tete;
-    while ((courant != NULL) && (!trouve)){
+    while (courant != NULL){
         if (memes_coord(courant->noeud, noeud)){
-            trouve = true;
-        }else{
-            courant = courant->suivant;
-        } 
+            courant->cout = cout;
+            courant->precedent = precedent;
+            return;
+        }
+        courant = courant->suivant;
     }
-    nouveau->noeud = precedent;
-    nouveau->precedent = nouveau;
-    nouveau->suivant = courant;
-    if (courant !=NULL){
-        courant->precedent = nouveau;
-        courant->cout = cout;
-    }
-    
+    cellule_t * nouveau = malloc(sizeof(cellule_t));
+    if (nouveau == NULL) return;
+    nouveau->noeud = noeud;
+    nouveau->precedent = precedent; 
+    nouveau->cout = cout;
+    nouveau->suivant = liste->tete;
+    liste->tete = nouveau;
+    liste->taille++;
 }
 
+void supprimer_noeud_liste(liste_noeud_t * liste, coord_t noeud){
+    if (liste == NULL || liste->tete == NULL) return;
+    cellule_t * courant = liste->tete;
+    cellule_t * prec = NULL;
+    while (courant != NULL){
+        if (memes_coord(courant->noeud, noeud)){
+            if (prec == NULL){
+                liste->tete = courant->suivant;
+            } else {
+                prec->suivant = courant->suivant;
+            }
+            free(courant);
+            liste->taille--;
+            return; 
+        }
+        prec = courant;
+        courant = courant->suivant;
+    }
+}
