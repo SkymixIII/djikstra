@@ -1,5 +1,5 @@
 #include "dijkstra.h"
-#include "animation.h"
+//#include "animation.h"
 
 /**
  * cout : calcule le coût pour rejoindre le noeud suivant depuis le noeud
@@ -43,7 +43,7 @@ float dijkstra(
         float seuil,
         liste_noeud_t** chemin
     ) {
-    // TODO
+    return -1.0;
 }
 
 

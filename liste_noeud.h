@@ -1,3 +1,7 @@
+#ifndef LISTE_NOEUD    
+#define LISTE_NOEUD
+
+
 #include <stdbool.h>
 #include "coord.h"
 #include <stdlib.h>
@@ -142,3 +146,4 @@ void supprimer_noeud_liste(liste_noeud_t * liste, coord_t noeud);
 
 
 
+#endif

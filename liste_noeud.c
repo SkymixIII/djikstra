@@ -118,8 +118,9 @@ coord_t min_noeud_liste(const liste_noeud_t * liste){
 }
 
 
-void inserer_noeud_liste(liste_noeud_t * liste, coord_t noeud, cellule_t* precedent, float cout){
+void inserer_noeud_liste(liste_noeud_t * liste, coord_t noeud, coord_t precedent, float cout){
     bool trouve = false; 
+    cellule_t * nouveau = malloc(sizeof(cellule_t));
     cellule_t * courant = liste->tete;
     while ((courant != NULL) && (!trouve)){
         if (memes_coord(courant->noeud, noeud)){
@@ -128,8 +129,11 @@ void inserer_noeud_liste(liste_noeud_t * liste, coord_t noeud, cellule_t* preced
             courant = courant->suivant;
         } 
     }
+    nouveau->noeud = precedent;
+    nouveau->precedent = nouveau;
+    nouveau->suivant = courant;
     if (courant !=NULL){
-        courant->precedent = precedent;
+        courant->precedent = nouveau;
         courant->cout = cout;
     }
     
