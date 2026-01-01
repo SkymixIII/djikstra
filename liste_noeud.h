@@ -13,6 +13,9 @@
 
 typedef struct liste_noeud_t liste_noeud_t;
 
+
+
+
 /**
  * creer_liste : crée une liste de noeuds, initialement vide
  *

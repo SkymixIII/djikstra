@@ -17,6 +17,8 @@ struct liste_noeud_t {
 };
 
 
+
+
 liste_noeud_t* creer_liste(){
     liste_noeud_t* liste = malloc(sizeof(liste_noeud_t));
     if (liste != NULL){

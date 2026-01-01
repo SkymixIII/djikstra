@@ -79,4 +79,3 @@ float dijkstra(grille_t grille, coord_t source, coord_t destination, float seuil
 }
 
 
-ffffff

@@ -26,6 +26,7 @@
 
 #include "grille.h"
 #include "liste_noeud.h"
+#include <stdio.h>
 
 
 
