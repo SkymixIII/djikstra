@@ -49,7 +49,7 @@ int get_profondeur(grille_t grille){
 
 
 coord_t inferieur_gauche(grille_t grille){
-    return creer_coord(0,0);
+    return creer_coord(0,grille.largeur*0);
 }
 
 

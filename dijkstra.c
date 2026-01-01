@@ -18,6 +18,7 @@
  * @return coût pour passer de courant à suivant
  */
 static float cout(grille_t grille, coord_t courant, coord_t suivant) {
+    return distance_euclidienne(courant, suivant) + fabsf(get_hauteur(grille, courant)-get_hauteur(grille, suivant));
 }
 
 /**
@@ -35,7 +36,14 @@ static float cout(grille_t grille, coord_t courant, coord_t suivant) {
  * @param source noeud de départ du chemin
  * @param noeud noeud vers lequel on veut construire le chemin depuis le départ
  */
-// TODO: construire_chemin_vers
+void construire_chemin_vers(liste_noeud_t * chemin, liste_noeud_t * visites, coord_t source, coord_t noeud){
+    if (memes_coord(source,noeud)){
+        coord_t tmp = precedent_noeud_liste(visites, noeud);
+        float cout_tmp = cout_noeud_liste(visites, tmp);
+        inserer_noeud_liste(chemin, noeud, tmp, 0.0);
+        construire_chemin_vers(chemin, visites, source, tmp);
+    }
+}
 
 float dijkstra(
         grille_t grille, 

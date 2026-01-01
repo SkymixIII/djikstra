@@ -115,14 +115,15 @@ coord_t min_noeud_liste(const liste_noeud_t * liste){
 void inserer_noeud_liste(liste_noeud_t * liste, coord_t noeud, coord_t precedent, float cout){
     if (liste == NULL) return;
     cellule_t * courant = liste->tete;
-    while (courant != NULL){
+    bool stop = false;
+    while ((courant != NULL) && (!stop)){
         if (memes_coord(courant->noeud, noeud)){
             courant->cout = cout;
             courant->precedent = precedent;
-            return;
         }
         courant = courant->suivant;
     }
+    if (stop) return;
     cellule_t * nouveau = malloc(sizeof(cellule_t));
     if (nouveau == NULL) return;
     nouveau->noeud = noeud;
