@@ -8,19 +8,10 @@
 #include <math.h>
 
 
-typedef struct cellule_t {
-    coord_t noeud;
-    float cout;
-    struct coord_t precedent;
-    struct cellule_t * suivant;
-} cellule_t;
 
 
-typedef struct liste_noeud_t {
-    cellule_t * tete;    
-    int taille;          
-} liste_noeud_t;
 
+typedef struct liste_noeud_t liste_noeud_t;
 
 /**
  * creer_liste : crée une liste de noeuds, initialement vide

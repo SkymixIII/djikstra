@@ -3,6 +3,20 @@
 
 
 
+typedef struct cellule_t {
+    coord_t noeud;
+    float cout;
+    struct coord_t precedent;
+    struct cellule_t * suivant;
+} cellule_t;
+
+
+struct liste_noeud_t {
+    cellule_t * tete;    
+    int taille;          
+};
+
+
 liste_noeud_t* creer_liste(){
     liste_noeud_t* liste = malloc(sizeof(liste_noeud_t));
     if (liste != NULL){
@@ -76,8 +90,8 @@ float cout_noeud_liste(const liste_noeud_t * liste, coord_t noeud){
 
 coord_t precedent_noeud_liste(const liste_noeud_t * liste, coord_t noeud){
     coord_t noeud_resultat;
-    noeud_resultat.abscisse = -1; 
-    noeud_resultat.ordonne = -1; 
+    noeud_resultat.x = -1; 
+    noeud_resultat.y = -1; 
     if (liste == NULL){
         return noeud_resultat;
     }

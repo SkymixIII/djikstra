@@ -36,22 +36,46 @@ static float cout(grille_t grille, coord_t courant, coord_t suivant) {
  * @param source noeud de départ du chemin
  * @param noeud noeud vers lequel on veut construire le chemin depuis le départ
  */
-void construire_chemin_vers(liste_noeud_t * chemin, liste_noeud_t * visites, coord_t source, coord_t noeud){
-    if (memes_coord(source,noeud)){
-        coord_t tmp = precedent_noeud_liste(visites, noeud);
-        float cout_tmp = cout_noeud_liste(visites, tmp);
-        inserer_noeud_liste(chemin, noeud, tmp, 0.0);
-        construire_chemin_vers(chemin, visites, source, tmp);
+void construire_chemin_vers(liste_noeud_t** chemin, liste_noeud_t * visites, coord_t source, coord_t noeud){
+    coord_t prec;
+    float cout;
+    if (memes_coord(source, noeud)){
+        prec = precedent_noeud_liste(visites, noeud); 
+        cout = cout_noeud_liste(visites, noeud);
+        inserer_noeud_liste(*chemin, noeud, prec, cout);
+        return; 
     }
+    prec = precedent_noeud_liste(visites, noeud);
+    construire_chemin_vers(chemin, visites, source, prec);
+    cout = cout_noeud_liste(visites, noeud); 
+    inserer_noeud_liste(*chemin, noeud, prec, cout);
 }
 
-float dijkstra(
-        grille_t grille, 
-        coord_t source, coord_t destination, 
-        float seuil,
-        liste_noeud_t** chemin
-    ) {
-    return -1.0;
+float dijkstra(grille_t grille, coord_t source, coord_t destination, float seuil, liste_noeud_t** chemin) {
+    liste_noeud_t* visites = creer_liste();
+    liste_noeud_t* aVisites = creer_liste();
+    coord_t min_noeud_coord;
+    inserer_noeud_liste(aVisites, source, source, 0.0);
+    while (!est_vide_liste(aVisites)){
+        min_noeud_coord = min_noeud_liste(aVisites);
+        inserer_noeud_liste(visites,min_noeud_coord,precedent_noeud_liste(aVisites,min_noeud_coord),cout_noeud_liste(aVisites,min_noeud_coord));
+        supprimer_noeud_liste(aVisites,min_noeud_coord);
+        coord_t** liste_voisins = malloc(sizeof(coord_t*));
+        int n = get_voisins(grille, min_noeud_coord, seuil, liste_voisins);
+        for (int i = 0; i < n; i++){
+            if (!contient_noeud_liste(visites,(*liste_voisins)[i])){
+                float cout_maj = cout(grille,min_noeud_coord,(*liste_voisins)[i]) + cout_noeud_liste(visites,min_noeud_coord);
+                float cout_actuel = cout_noeud_liste(aVisites,(*liste_voisins)[i]);
+                if (cout_maj<cout_actuel){
+                    inserer_noeud_liste(aVisites, (*liste_voisins)[i], min_noeud_coord, cout_maj);
+                }
+            }
+        }
+    }
+    if (chemin!=NULL){
+        construire_chemin_vers(chemin, visites, source, destination);
+    }
+    return cout_noeud_liste(visites, destination);
 }
 
 

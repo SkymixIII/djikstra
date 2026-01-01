@@ -8,35 +8,35 @@
 
 /**
  * Type coord_t représentant un couple de coordonée, caractérisé par
- *  - l'abscisse (entière)
+ *  - l'x (entière)
  *  - l'ordonnée (entière)
  */
 typedef struct coord_t {
-    int abscisse;
-    int ordonne;
+    int x;
+    int y;
 } coord_t;
 
 
 /**
- * creer_coord : creer une coordonnée d'un point ayant pour valeur d'abscisse = abscisse et et pour valeur d'ordonnée = ordonnée  
+ * creer_coord : creer une coordonnée d'un point ayant pour valeur d'x = x et et pour valeur d'ordonnée = ordonnée  
  *
- * Pré-conditions : abscisse = int && ordonne = int 
- * Post-conditions : *creer_coord(5,4).abscisse == 5 && *creer_coord(5,4).ordonne == 4
+ * Pré-conditions : x = int && y = int 
+ * Post-conditions : *creer_coord(5,4).x == 5 && *creer_coord(5,4).y == 4
  *
- * @param abscisse abscisse 
- * @param ordonne ordonnee du point 
+ * @param x x 
+ * @param y ye du point 
  * @return un pointeur vers la structure contenant la coordonée
  */
-coord_t creer_coord(int abscisse, int ordonne);
+coord_t creer_coord(int x, int y);
 
 
 /**
- * get_x : recupere l'abscisse du point passer en parametre 
+ * get_x : recupere l'x du point passer en parametre 
  *
  * Pré-conditions : coo != null
- * Post-conditions : coo.abscisse == get_x(coo)
+ * Post-conditions : coo.x == get_x(coo)
  *
- * @param coo point de coordonée dont on veut la valeur de l'abscisse
+ * @param coo point de coordonée dont on veut la valeur de l'x
  * @return l'absicce du point passé en parametre 
  */
 int get_x(coord_t coo);
@@ -46,7 +46,7 @@ int get_x(coord_t coo);
  * get_y : recupere l'ordonnée du point passer en parametre 
  *
  * Pré-conditions : coo != null
- * Post-conditions : coo->ordonne == get_y(coo)
+ * Post-conditions : coo->y == get_y(coo)
  *
  * @param coo point de coordonée dont on veut la valeur de l'ordonée
  * @return l'ordonnée du point passé en parametre 
@@ -55,13 +55,13 @@ int get_y(coord_t coo);
 
 
 /**
- * set_x : change la valeur de l'abscisse du point passé en paramètre 
+ * set_x : change la valeur de l'x du point passé en paramètre 
  *
  * Pré-conditions : coo != null
- * Post-conditions : coo->abscisse == val 
+ * Post-conditions : coo->x == val 
  *
- * @param coo point dont on veut changer l'abscisse 
- * @param val nouvelle valeure d'abscisse 
+ * @param coo point dont on veut changer l'x 
+ * @param val nouvelle valeure d'x 
  */
 void set_x(coord_t* coo, int val);
 
@@ -70,7 +70,7 @@ void set_x(coord_t* coo, int val);
  * set_y : change la valeur de l'ordonnée du point passé en paramètre 
  *
  * Pré-conditions : coo != null
- * Post-conditions : coo->ordonne == val 
+ * Post-conditions : coo->y == val 
  *
  * @param coo point dont on veut changer l'ordonnée 
  * @param val nouvelle valeure d'ordonnée 
@@ -86,19 +86,19 @@ void set_y(coord_t* coo, int val);
  *
  * @param coo1 point 1 
  * @param coo2 point 2
- * @return vrai si point1.abscisse == point2.abscisse && point1.ordonne == point2.ordonne; faux sinon 
+ * @return vrai si point1.x == point2.x && point1.y == point2.y; faux sinon 
  */
 bool memes_coord(coord_t coo1, coord_t coo2);
 
 
 /**
- * translation : renvoie un nouveau point dont l'abscisse est dépalcé de dx et l'ordonnée de dy
+ * translation : renvoie un nouveau point dont l'x est dépalcé de dx et l'ordonnée de dy
  *
  * Pré-conditions : dx (int) && dy (int) && coo != null
- * Post-conditions : coo_return.abscisse == coo.abscisse + dx && coo_return.ordonne == coo.ordonne + dy
+ * Post-conditions : coo_return.x == coo.x + dx && coo_return.y == coo.y + dy
  *
  * @param coo point de base 
- * @param dx translation de l'abscisse
+ * @param dx translation de l'x
  * @param dy translation de l'orodnnée
  * @return une copie du point en paramètre translaté de dx et dy 
  */

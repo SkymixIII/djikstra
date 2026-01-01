@@ -14,7 +14,7 @@
  * @return position dans le tableau en coordonnée linéaire
  */
 static size_t coord_lin(grille_t grille, coord_t position) {
-    return grille.largeur * position.ordonne + position.abscisse;
+    return grille.largeur * position.y + position.x;
 }
 
 
@@ -34,7 +34,7 @@ void detruire_grille(grille_t grille){
 
 
 bool dans_les_bornes(grille_t grille, coord_t position){
-    return (0<=position.abscisse && position.abscisse<=grille.largeur-1) && (0<=position.ordonne && position.ordonne<=grille.profondeur-1);
+    return (0<=position.x && position.x<=grille.largeur-1) && (0<=position.y && position.y<=grille.profondeur-1);
 }
 
 
@@ -81,8 +81,8 @@ size_t get_voisins(grille_t grille, coord_t position, float seuil, coord_t** voi
     float hauteur_position = get_hauteur(grille, position);
     for (int i = 0; i < 4; i++){
         coord_t candidat;
-        candidat.abscisse = position.abscisse + directions[i].abscisse;
-        candidat.ordonne = position.ordonne + directions[i].ordonne;
+        candidat.x = position.x + directions[i].x;
+        candidat.y = position.y + directions[i].y;
         if (dans_les_bornes(grille, candidat)){
             float hauteur_voisin = get_hauteur(grille, candidat);
             if (fabsf(hauteur_position - hauteur_voisin) <= seuil){
