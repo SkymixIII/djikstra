@@ -136,6 +136,7 @@ void inserer_noeud_liste(liste_noeud_t * liste, coord_t noeud, coord_t precedent
         if (memes_coord(courant->noeud, noeud)){
             courant->cout = cout;
             courant->precedent = precedent;
+            stop = true;
         }
         courant = courant->suivant;
     }
