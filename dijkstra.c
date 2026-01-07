@@ -85,7 +85,6 @@ float dijkstra(grille_t grille, coord_t source, coord_t destination, float seuil
     float resultat = cout_noeud_liste(visites, destination); 
     detruire_liste(&visites);  
     detruire_liste(&aVisites); 
-    
     return resultat;
 }
 
